@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
   selector: 'app-customelement',
@@ -7,6 +7,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None // <- this allows CSS to bleed to this component from parent app
 })
 export class CustomelementComponent implements OnInit {
+
+  @Input() name: string;
 
   constructor() { }
 

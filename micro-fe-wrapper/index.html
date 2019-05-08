@@ -24,7 +24,7 @@
   </style>
 </head>
 
-<body>
+<body onload="tellComponents()">
 
   <div class="container">
     <div class="row">
@@ -60,17 +60,13 @@
       <div class="col">
         <div class="card">
           <h5 class="card-header">Angular</h5>
-          <div class="card-body" id="ng-container">
-            <ng-el name="Chris"></ng-el>
-          </div>
+          <div class="card-body" id="ng-container"></div>
         </div>
       </div>
       <div class="col">
         <div class="card">
           <h5 class="card-header">React</h5>
-          <div class="card-body" id="react-container">
-            <react-el name="Chris"></react-el>
-          </div>
+          <div class="card-body" id="react-container"></div>
         </div>
       </div>
     </div>
@@ -89,14 +85,18 @@
       reactEl.setAttribute('name', name);
 
       const reactElContainer =  document.getElementById('react-container')
-      reactElContainer.removeChild(reactElContainer.children[0]);
+      if (reactElContainer.children.length > 0) {
+        reactElContainer.removeChild(reactElContainer.children[0]);
+      }
       reactElContainer.appendChild(reactEl);
 
       const ngEl = document.createElement('ng-el');
       ngEl.setAttribute('name', name);
 
       const ngElContainer =  document.getElementById('ng-container')
-      ngElContainer.removeChild(ngElContainer.children[0]);
+      if (ngElContainer.children.length > 0) {
+        ngElContainer.removeChild(ngElContainer.children[0]);
+      }
       ngElContainer.appendChild(ngEl);
 
     }
