@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "npm run build && serve -l 5002 dist",
-    "build": "webpack --mode production"
+    "build": "webpack --mode development"
   },
   "eslintConfig": {
     "extends": "react-app"

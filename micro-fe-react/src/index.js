@@ -2,44 +2,48 @@ import * as React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import htmlToReact from 'html-to-react';
 
-import { ExampleComponent } from './ExampleComponent';
+import { ExampleComponent } from './ExampleComponent.js';
 
 class ReactElement extends HTMLElement {
   
-    constructor() {
-      super();
-      this.observer = new MutationObserver(() => this.update());
-      this.observer.observe(this, { attributes: true });
+  constructor() {
+    super();
+    this.observer = new MutationObserver(() => this.update());
+    this.observer.observe(this, { attributes: true });
   }
 
-    connectedCallback() {
-      this._innerHTML = this.innerHTML;
-        this.mount();
-    }
-    disconnectedCallback() {
-        this.unmount();
-        this.observer.disconnect();
-    }
-    update() {
-        this.unmount();
-        this.mount();
-    }
+  connectedCallback() {
+    this._innerHTML = this.innerHTML;
+    this.mount();
+  }
 
-    mount() {
-        const props = {
-          ...this.getProps(this.attributes, ReactElement.propTypes),
-          ...this.getEvents(ReactElement.propTypes),
-          children: this.parseHtmlToReact(this.innerHTML)
-        };
-        render(<ExampleComponent {...props} />, this);
-    }
+  disconnectedCallback() {
+    this.unmount();
+    this.observer.disconnect();
+  }
 
-    unmount() {
-        unmountComponentAtNode(this);
-    }
+  update() {
+    this.unmount();
+    this.mount();
+  }
 
-    parseHtmlToReact(html) {
-      return html && new htmlToReact.Parser().parse(html);
+  mount() {
+    const propTypes = ExampleComponent.propTypes ? ExampleComponent.propTypes : {};
+    const events = ExampleComponent.propTypes ? ExampleComponent.propTypes : {};
+    const props = {
+      ...this.getProps(this.attributes, propTypes),
+      ...this.getEvents(events),
+      children: this.parseHtmlToReact(this.innerHTML)
+    };
+    render(<ExampleComponent {...props} />, this);
+  }
+
+  unmount() {
+    unmountComponentAtNode(this);
+  }
+
+  parseHtmlToReact(html) {
+    return html && new htmlToReact.Parser().parse(html);
   }
 
   getProps(attributes, propTypes) {
@@ -48,16 +52,16 @@ class ReactElement extends HTMLElement {
       .filter(attr => attr.name !== 'style')         
       .map(attr => this.convert(propTypes, attr.name, attr.value))
       .reduce((props, prop) => 
-          ({ ...props, [prop.name]: prop.value }), {});
+        ({ ...props, [prop.name]: prop.value }), {});
   }
 
   getEvents(propTypes) {
     return Object.keys(propTypes)
       .filter(key => /on([A-Z].*)/.exec(key))
       .reduce((events, ev) => ({
-          ...events,
-          [ev]: args => 
-            this.dispatchEvent(new CustomEvent(ev, { ...args }))
+        ...events,
+        [ev]: args => 
+        this.dispatchEvent(new CustomEvent(ev, { ...args }))
       }), {});
   }
 
