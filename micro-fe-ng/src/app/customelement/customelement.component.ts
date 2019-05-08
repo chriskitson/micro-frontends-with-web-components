@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-customelement',
@@ -9,6 +9,7 @@ import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 export class CustomelementComponent implements OnInit {
 
   @Input() name: string;
+  @Output() helloEvt: EventEmitter<string> = new EventEmitter();
 
   constructor() { }
 
