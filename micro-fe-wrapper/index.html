@@ -8,6 +8,11 @@
     .intro {
       margin: 30px 0;
     }
+    .repo {
+      margin: 30px 0;
+      text-align: center;
+      width: 100%;
+    }
     .card-body {
       width: 100%;
       height: 300px;
@@ -33,7 +38,7 @@
       <div class="col intro">
         <p>This is an example of Angular and React components living within the same application using web components. For more information check out the links below:</p>
         <ul>
-          <li><a href="https://medium.com/@kitson.mac/ui-microservices-reversing-the-anti-pattern-375bc22287b0?source=friends_link&sk=657c5ee99312c933df5832af834588a1">UI microservices — reversing the anti-pattern (micro frontends)</a></li>
+          <li><a href="https://medium.com/@kitson.mac/ui-microservices-reversing-the-anti-pattern-375bc22287b0?source=friends_link&sk=657c5ee99312c933df5832af834588a1" target="_blank">UI microservices — reversing the anti-pattern (micro frontends)</a></li>
           <li><a href="https://medium.com/javascript-in-plain-english/could-web-components-actually-compliment-javascript-frameworks-5-reasons-why-i-think-so-971eee82ee85?source=friends_link&sk=7044ef2964af32e96173f24ed5b5150e" target="_blank">Five reasons why Web Components could complement JavaScript frameworks</a></li>
           <li><a href="#" target="_blank">Micro-frontends using web components</a></li>
         </ul>
@@ -41,23 +46,61 @@
     </div>
     <div class="row">
       <div class="col">
+          <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">What is your name?</h4>
+            <div class="form-group">
+              <input type="text" onClick="this.setSelectionRange(0, this.value.length)" class="form-control" id="yourName" aria-describedby="yourName" placeholder="Your name" value="Chris" />
+              <small id="emailHelp" class="form-text text-muted">Enter your name above then click the button below to tell the components.</small>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="tellComponents()">Tell the components</button>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <div class="card">
           <h5 class="card-header">Angular</h5>
-          <div class="card-body">
-            <ng-el></ng-el>
+          <div class="card-body" id="ng-container">
+            <ng-el name="Chris"></ng-el>
           </div>
         </div>
       </div>
       <div class="col">
         <div class="card">
           <h5 class="card-header">React</h5>
-          <div class="card-body">
-            <react-el></react-el>
+          <div class="card-body" id="react-container">
+            <react-el name="Chris"></react-el>
           </div>
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="repo">
+        <a href="https://github.com/chriskitson/micro-frontends-with-web-components" target="_blank">View this code repository on github</a>.
+      </div>
+    </div>
   </div>
+
+  <script>
+    function tellComponents() {
+      const name = document.getElementById('yourName').value;
+
+      const reactEl = document.createElement('react-el');
+      reactEl.setAttribute('name', name);
+
+      const reactElContainer =  document.getElementById('react-container')
+      reactElContainer.removeChild(reactElContainer.children[0]);
+      reactElContainer.appendChild(reactEl);
+
+      const ngEl = document.createElement('react-el');
+      ngEl.setAttribute('name', name);
+
+      const ngElContainer =  document.getElementById('ng-container')
+      ngElContainer.removeChild(ngElContainer.children[0]);
+      ngElContainer.appendChild(ngEl);
+
+    }
+  </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.9.1/zone.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
