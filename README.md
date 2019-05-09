@@ -5,7 +5,7 @@ Using web components as a wrapper for both Angular and React components, I am go
 Follow the instructions below to build and serve micro-frontend components for Angular and React, and a wrapper application to compose them together and handle communication between them.
 
 For a full walk-through visit this post:
-[#](Create Micro-frontends using Web Components with support for Angular and React)
+[Create Micro-frontends using Web Components with support for Angular and React](http://localhost:5001/main.js)
 
 ## Build and serve Angular component
 
